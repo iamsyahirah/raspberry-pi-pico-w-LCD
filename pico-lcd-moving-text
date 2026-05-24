@@ -1,0 +1,26 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// Try 0x27 first. If LCD does not show text, try 0x3F
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  // I2C pins for Raspberry Pi Pico W
+  Wire.setSDA(4);   // GP4
+  Wire.setSCL(5);   // GP5
+  Wire.begin();
+
+  lcd.init();
+  lcd.backlight();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Hello Pico W");
+
+  lcd.setCursor(0, 1);
+  lcd.print("Let's ready to create new project!!!");
+}
+
+void loop() {
+  lcd.scrollDisplayLeft();   // move text to the left
+  delay(300);                // speed of movement
+}
