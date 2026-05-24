@@ -1,0 +1,42 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Custom character: heart
+byte heart[8] = {
+  B00000,
+  B01010,
+  B11111,
+  B11111,
+  B11111,
+  B01110,
+  B00100,
+  B00000
+};
+
+void setup() {
+  // I2C pins for Raspberry Pi Pico W
+  Wire.setSDA(4);   // SDA = GP4
+  Wire.setSCL(5);   // SCL = GP5
+  Wire.begin();
+
+  lcd.init();
+  lcd.backlight();
+
+  // Save heart character at location 0
+  lcd.createChar(0, heart);
+
+  lcd.setCursor(0, 0);
+  lcd.print("Hello Pico ");
+  lcd.write(byte(0));   // Display heart symbol
+
+  lcd.setCursor(0, 1);
+  lcd.print("I love LCD ");
+  lcd.write(byte(0));
+}
+
+void loop() {
+  lcd.scrollDisplayLeft();
+  delay(300);
+}
