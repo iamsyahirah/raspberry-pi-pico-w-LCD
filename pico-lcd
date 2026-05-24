@@ -1,0 +1,25 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+// LCD address biasanya 0x27 atau 0x3F
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  // Set pin I2C untuk Raspberry Pi Pico W
+  Wire.setSDA(4);   // GP4
+  Wire.setSCL(5);   // GP5
+  Wire.begin();
+
+  lcd.init();
+  lcd.backlight();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Hello Pico");
+
+  lcd.setCursor(0, 1);
+  lcd.print("Let's go!!");
+}
+
+void loop() {
+  // Tiada apa-apa dalam loop
+}
